@@ -168,9 +168,8 @@ body {
 <div class="form-container">
 <form action="https://formsubmit.co/pjsneakers@hotmail.com" method="POST" class="space-y-6">
   <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_next" value="https://datastrides.github.io/thank-you.html">
   <div>
-    <select id="inquiryType" class="form-input w-full py-3 px-4 text-slate-200 bg-slate-700/50 rounded-button" required>
+    <select id="inquiryType" name="inquiryType" class="form-input w-full py-3 px-4 text-slate-200 bg-slate-700/50 rounded-button" required>
       <option value="">Select Inquiry Type</option>
       <option value="business">Business</option>
       <option value="personal">Personal</option>
@@ -180,23 +179,23 @@ body {
   </div>
 
   <div>
-    <input type="text" id="name" class="form-input w-full" placeholder="Your Name" required>
+    <input type="text" id="name" name="name" class="form-input w-full" placeholder="Your Name" required>
   </div>
 
   <div>
-    <input type="email" id="email" class="form-input w-full" placeholder="Your Email" required>
+    <input type="email" id="email" name="email" class="form-input w-full" placeholder="Your Email" required>
   </div>
 
   <div id="companyField" class="hidden">
-    <input type="text" id="company" class="form-input w-full" placeholder="Company Name">
+    <input type="text" id="company" name="company" class="form-input w-full" placeholder="Company Name">
   </div>
 
   <div>
-    <textarea id="message" class="form-input w-full resize-none" placeholder="Your Message" rows="4" required></textarea>
+    <textarea id="message" name="message" class="form-input w-full resize-none" placeholder="Your Message" rows="4" required></textarea>
   </div>
 
   <div class="flex items-center space-x-2">
-    <input type="checkbox" id="notify" class="w-4 h-4">
+    <input type="checkbox" id="notify" name="notify" class="w-4 h-4">
     <label for="notify" class="text-sm text-slate-400">Notify me about the launch</label>
   </div>
 
@@ -262,6 +261,40 @@ element.classList.add('visible');
 checkFade();
 // Check on scroll
 window.addEventListener('scroll', checkFade);
+});
+</script>
+<script>
+const form = document.querySelector('form[action^="https://formsubmit.co"]');
+const successMessage = document.querySelector('.success-message');
+const backButton = document.getElementById('backButton');
+
+form.addEventListener('submit', async function(event) {
+  event.preventDefault();
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: { 'Accept': 'application/json' },
+    });
+
+    if (response.ok) {
+      successMessage.classList.add('show');
+      form.style.display = 'none';
+    } else {
+      alert('Oops! There was a problem submitting your form.');
+    }
+  } catch (error) {
+    alert('Oops! There was a problem submitting your form.');
+  }
+});
+
+// Back button shows form again and hides success message
+backButton.addEventListener('click', () => {
+  successMessage.classList.remove('show');
+  form.style.display = '';
 });
 </script>
 </body>
