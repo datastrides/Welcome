@@ -93,34 +93,85 @@ body {
 }
 .success-message {
   opacity: 0;
-  pointer-events: none; /* ✅ FIX: allow interaction when hidden */
+  pointer-events: none;
   transform: scale(0.9);
   transition: all 0.5s ease;
+  padding: 3rem 2rem 4rem 2rem; /* increased top and bottom padding */
+  box-sizing: border-box;
+  min-height: 320px; /* added min height to enlarge box vertically */
 }
 .success-message.show {
   opacity: 1;
   pointer-events: auto; /* ✅ FIX: allow interaction when visible */
   transform: scale(1);
 }
-/* Success icon and logo-square overrides for horizontal, centered alignment */
+/* Success icon and logo-square overrides for thank-you message */
 .success-icon {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 76px; /* two 32px squares + spacing */
+  height: 32px;
   margin: 0 auto 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
 }
 
-.logo-square {
-  position: static !important;
-  transform: none !important;
+.success-icon .logo-square {
   width: 32px;
   height: 32px;
-  margin: 0 !important;
+  border-radius: 4px;
   transition: all 0.5s ease;
+}
+
+.success-icon .logo-square:first-child {
+  transform: rotate(-12deg);
+  position: relative;
+}
+
+.success-icon .logo-square:last-child {
+  position: absolute;
+  top: 0.25rem; /* 4px */
+  left: 0.75rem; /* 12px */
+  transform: none;
+}
+
+/* Restore original logo-square styles for the rest of the site (including header) */
+.logo-square {
+  border-radius: 4px;
+  transition: all 0.5s ease;
+}
+
+.logo-square.bg-secondary {
+  background-color: #40E0D0;
+}
+
+.logo-square.bg-primary {
+  background-color: #2B7FFF;
+}
+
+.logo-square.w-8 {
+  width: 32px;
+}
+
+.logo-square.h-8 {
+  height: 32px;
+}
+
+.transform {
+  /* This can be left empty or have global transform styles if any */
+}
+
+.transform.-rotate-12 {
+  transform: rotate(-12deg);
+}
+
+.absolute {
+  position: absolute;
+}
+
+.ml-3 {
+  margin-left: 0.75rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 .success-square {
   position: absolute;
@@ -133,6 +184,13 @@ body {
 .success-square.animate {
   opacity: 0.8;
   transform: translate(var(--x), var(--y)) scale(1);
+}
+</style>
+<style>
+footer {
+  padding-top: 2rem; /* Increase top padding */
+  padding-bottom: 2rem; /* Add bottom padding for spacing */
+  margin-top: auto; /* Push footer to bottom if using flex layout */
 }
 </style>
 </head>
@@ -224,15 +282,15 @@ body {
 </form>
 </div>
 <div class="success-message absolute inset-0 bg-slate-800/50 backdrop-blur-sm flex flex-col items-center justify-center p-8 rounded-lg border border-slate-700/50">
-<div class="success-icon mb-6 relative w-16 h-16">
-<div class="logo-square w-12 h-12 bg-secondary rounded-sm"></div>
-<div class="logo-square w-12 h-12 bg-primary rounded-sm"></div>
-</div>
-<h3 class="text-xl font-semibold mb-2">Thank You!</h3>
-<p class="text-center text-gray-600 mb-6">Your message has been received. We'll be in touch soon.</p>
-<button id="backButton" class="py-2 px-6 text-primary hover:text-primary/80 transition-colors !rounded-button whitespace-nowrap">
-Back to Form
-</button>
+  <div class="success-icon mb-6">
+    <div class="logo-square bg-secondary rounded-sm"></div>
+    <div class="logo-square bg-primary rounded-sm"></div>
+  </div>
+  <h3 class="text-xl font-semibold mb-2">Thank You!</h3>
+  <p class="text-center text-gray-600 mb-6">Your message has been received. We'll be in touch soon.</p>
+  <button id="backButton" class="py-2 px-6 text-primary hover:text-primary/80 transition-colors !rounded-button whitespace-nowrap">
+    Back to Form
+  </button>
 </div>
 </div>
 </div>
@@ -264,22 +322,22 @@ Back to Form
 </footer>
 <script id="animation-script">
 document.addEventListener('DOMContentLoaded', function() {
-const fadeElements = document.querySelectorAll('.fade-in');
-function checkFade() {
-fadeElements.forEach(element => {
-const rect = element.getBoundingClientRect();
-const delay = element.dataset.delay || 0;
-if (rect.top <= window.innerHeight * 0.8) {
-setTimeout(() => {
-element.classList.add('visible');
-}, delay);
-}
-});
-}
-// Initial check
-checkFade();
-// Check on scroll
-window.addEventListener('scroll', checkFade);
+  const fadeElements = document.querySelectorAll('.fade-in');
+  function checkFade() {
+    fadeElements.forEach(element => {
+      const rect = element.getBoundingClientRect();
+      const delay = element.dataset.delay || 0;
+      if (rect.top <= window.innerHeight * 0.8) {
+        setTimeout(() => {
+          element.classList.add('visible');
+        }, delay);
+      }
+    });
+  }
+  // Initial check
+  checkFade();
+  // Check on scroll
+  window.addEventListener('scroll', checkFade);
 });
 </script>
 <script>
