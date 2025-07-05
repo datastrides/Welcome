@@ -102,7 +102,24 @@ body {
   pointer-events: auto; /* ✅ FIX: allow interaction when visible */
   transform: scale(1);
 }
+/* Success icon and logo-square overrides for horizontal, centered alignment */
+.success-icon {
+  position: relative;
+  width: 64px; /* 16 * 4 as per existing w-16 */
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .logo-square {
+  position: static !important;
+  transform: none !important;
+  width: 32px;
+  height: 32px;
+  margin: 0;
   transition: all 0.5s ease;
 }
 .success-square {
