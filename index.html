@@ -70,6 +70,20 @@
         background-color: #2b7fff;
         color: white;
       }
+      .preview-fade::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(156, 163, 175, 0.9)
+        );
+        pointer-events: none;
+      }
     </style>
   </head>
   <body class="min-h-screen flex flex-col">
@@ -175,7 +189,7 @@
                   id="mot-email"
                   name="email"
                   class="form-input w-full"
-                  placeholder="Business Email"
+                  placeholder="Email"
                   required
                   autocomplete="email"
                 />
@@ -225,18 +239,57 @@
                   class="form-input w-full resize-none"
                 ></textarea>
               </div>
+              <div>
+                <label
+                  for="fileUpload"
+                  class="block text-sm mb-2 text-slate-400"
+                >
+                  Upload your dataset
+                  <span class="text-red-400 font-semibold ml-1"
+                    >(required)</span
+                  >
+                </label>
+                <input
+                  type="file"
+                  id="fileUpload"
+                  name="fileUpload"
+                  class="form-input w-full"
+                  accept=".csv,.xlsx,.xls,.txt,.json,.zip,.pdf"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="submit-btn w-full py-3 px-6 text-center border border-primary text-primary hover:bg-primary hover:text-white rounded-button"
+              >
+                Submit
+              </button>
               <!-- Success message overlay -->
               <div
                 class="success-message absolute inset-0 bg-slate-800/50 backdrop-blur-sm flex flex-col items-center justify-center p-8 rounded-lg border border-slate-700/50 hidden"
                 id="motSuccessMessage"
               >
                 <h3 class="text-xl font-semibold mb-2 text-white">
-                  Thank You!
+                  Congratulations!
                 </h3>
                 <p class="text-center text-gray-400 mb-6">
-                  Thanks for signing up! We will reply soon with your free Data
-                  MOT.
+                  You’ve successfully submitted your Data MOT request. Our team
+                  will review your data and get back to you shortly.
                 </p>
+                <div
+                  class="mt-4 p-4 bg-slate-700/40 text-slate-200 rounded-md border border-primary"
+                >
+                  <p class="text-sm font-semibold text-primary mb-1">
+                    What happens next?
+                  </p>
+                  <p class="text-sm text-slate-300">
+                    Once you’ve submitted your form and uploaded your data, our
+                    team will review it and email you your personalised Data MOT
+                    report within
+                    <span class="text-white font-semibold">24–48 hours</span>.
+                  </p>
+                </div>
                 <button
                   id="motBackButton"
                   class="py-2 px-6 text-primary hover:text-primary/80 transition-colors !rounded-button whitespace-nowrap"
@@ -255,29 +308,83 @@
               Sample Data MOT Report
             </h3>
             <div
-              class="space-y-4 text-sm text-slate-300 font-mono leading-relaxed relative pr-2"
+              class="space-y-4 text-sm text-slate-300 font-mono leading-relaxed relative pr-2 preview-fade"
             >
-              <p><span class="text-primary">Overall Score:</span> 62/100</p>
-              <p><span class="text-primary">Status:</span> Needs Improvement</p>
-              <p><span class="text-primary">Critical Fixes:</span></p>
-              <ul class="list-disc list-inside pl-4 text-slate-400">
-                <li>Duplicate customer records detected (6.2%)</li>
-                <li>Missing revenue data in 3 key months</li>
-              </ul>
-              <p><span class="text-primary">Quick Wins:</span></p>
-              <ul class="list-disc list-inside pl-4 text-slate-400">
-                <li>Standardize date formats for consistent tracking</li>
-                <li>Remove whitespace from product names</li>
-              </ul>
               <p>
-                <span class="text-primary">Strategic Insights:</span> Improve
-                segmentation for higher conversion rates. Detect outliers in
-                spend per region.
+                <span class="text-primary font-semibold">Overall Score:</span>
+                <span class="text-yellow-400 font-bold text-lg">62 / 100</span>
               </p>
-              <p class="text-primary font-semibold">
-                Suggested Add-On: Custom dashboard for weekly trend reporting.
+              <p>
+                <span class="text-primary font-semibold">Status:</span>
+                <span class="text-red-400 font-semibold"
+                  >⚠ Needs Immediate Attention</span
+                >
               </p>
 
+              <div
+                class="bg-slate-800/40 rounded-md p-4 border border-slate-700"
+              >
+                <p class="text-sm text-primary font-bold mb-1">
+                  🔍 Key Findings:
+                </p>
+                <ul
+                  class="list-disc list-inside text-slate-300 text-sm space-y-1"
+                >
+                  <li>
+                    <span class="text-red-300">6.2%</span> duplicate customer
+                    records detected
+                  </li>
+                  <li>
+                    Missing revenue data in
+                    <span class="text-yellow-300 font-medium"
+                      >3 key financial months</span
+                    >
+                  </li>
+                  <li>Inconsistent date formatting in transactional data</li>
+                </ul>
+              </div>
+
+              <div
+                class="bg-slate-800/40 rounded-md p-4 border border-slate-700"
+              >
+                <p class="text-sm text-primary font-bold mb-1">
+                  ✅ Quick Wins:
+                </p>
+                <ul
+                  class="list-disc list-inside text-slate-300 text-sm space-y-1"
+                >
+                  <li>Standardise date and currency formats</li>
+                  <li>
+                    Remove whitespace from
+                    <span class="text-sky-300">product names</span> for
+                    consistency
+                  </li>
+                  <li>Flag and merge duplicate entries</li>
+                </ul>
+              </div>
+
+              <!-- Extra box section for more preview content -->
+              <div
+                class="bg-slate-800/40 rounded-md p-4 border border-slate-700"
+              >
+                <p class="text-sm text-primary font-bold mb-1">
+                  📊 Data Opportunities:
+                </p>
+                <ul
+                  class="list-disc list-inside text-slate-300 text-sm space-y-1"
+                >
+                  <li>Integrate customer feedback to enrich datasets</li>
+                  <li>Automate data validation for new entries</li>
+                  <li>
+                    <span class="text-green-300"
+                      >Leverage time-series analysis</span
+                    >
+                    for trend forecasting
+                  </li>
+                </ul>
+              </div>
+
+              <!--
               <div
                 class="mt-10 py-6 border-t border-slate-700 text-center bg-slate-800/40 rounded-md shadow-inner"
               >
@@ -289,6 +396,7 @@
                   insights.
                 </p>
               </div>
+              -->
             </div>
           </div>
         </section>
@@ -368,3 +476,4 @@
     </script>
   </body>
 </html>
+
